@@ -9,29 +9,23 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var myWebView: WebView // Declarar myWebView como propiedad de clase
+    private lateinit var myWebView: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        myWebView = findViewById(R.id.webview) // Inicializar la propiedad
+        myWebView = findViewById(R.id.webview)
 
-        // Habilitar JavaScript si es necesario
+        // Habilitar JavaScript (permitido si el sitio es confiable)
         val webSettings: WebSettings = myWebView.settings
         webSettings.javaScriptEnabled = true
 
-        myWebView.webViewClient = object : WebViewClient() {
-            override fun onReceivedSslError(
-                view: WebView,
-                handler: android.webkit.SslErrorHandler,
-                error: android.net.http.SslError
-            ) {
-                handler.proceed() // Ignorar error SSL
-            }
-        }
-        myWebView.loadUrl("https://partes.colegiomilitar.mil.ar/Partes/Identity/Account/Login?ReturnUrl=%2FPartes")
+        // WebView seguro (SIN ignorar SSL)
+        myWebView.webViewClient = WebViewClient()
+
+        myWebView.loadUrl("https://partes.colegiomilitar.mil.ar/")
     }
 
     override fun onBackPressed() {
@@ -42,4 +36,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
 
